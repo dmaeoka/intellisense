@@ -11,7 +11,7 @@ First install all dependencies.
 
 ## 2. Run Dev environment
 
-To run a dev environment run and access [http://localhost:3000](http://localhost:3000):
+To run a dev environment run the following command and access [http://localhost:3000](http://localhost:3000):
 
     npm run dev
 
