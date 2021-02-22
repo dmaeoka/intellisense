@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import Chart from "chart.js";
 
-function CardLineChart({ title, data }) {
+function CardLineChart({ title, data, pending, error }) {
 	React.useEffect(() => {
-		if (data.length === 0)
+		if (pending || data.length === 0)
 			return;
 
 		const colours = [
@@ -111,7 +111,14 @@ function CardLineChart({ title, data }) {
 		};
 		const ctx = document.getElementById("line-chart-2").getContext("2d");
 		window.myLine = new Chart(ctx, config);
-	}, [data]);
+	}, [data, pending, error]);
+
+	const loading = () => {
+		if (pending) {
+			return (<div className="text-white text-xl font-semibold whitespace-no-wrap text-center">Loading data...</div>);
+		}
+	};
+
 	return (
 		<>
 			<div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-gray-800">
@@ -130,6 +137,7 @@ function CardLineChart({ title, data }) {
 				<div className="p-4 flex-auto">
 					{/* Chart */}
 					<div className="relative h-350-px">
+						{ loading() }
 						<canvas id="line-chart-2"></canvas>
 					</div>
 				</div>
@@ -141,11 +149,15 @@ function CardLineChart({ title, data }) {
 CardLineChart.defaultProps = {
 	title: "",
 	data: [],
+	pending: true,
+	error: null
 };
 
 CardLineChart.propTypes = {
 	title: PropTypes.string,
 	data: PropTypes.array.isRequired,
+	pending: PropTypes.bool.isRequired,
+	error: PropTypes.any
 };
 
 export default CardLineChart;

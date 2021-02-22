@@ -2,20 +2,33 @@ import React from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 
-function CardTable({ title, data }) {
-	const rowItem = data.map((item) => {
-		const lastValue = item[1].values[item[1].values.length - 1];
-		return (
-			<tr key={uuidv4()}>
-				<th className="border-0 p-4 align-middle text-xs whitespace-no-wrap text-left flex items-center">
-					{ item[0] }
-				</th>
-				<td className="border-0 p-4 align-middle text-xs whitespace-no-wrap">
-					{ lastValue }
-				</td>
-			</tr>
-		);
-	});
+function CardTable({ title, data, pending, error }) {
+
+	const rowItem = () => {
+		if (pending) {
+			return (
+				<tr key={uuidv4()}>
+					<th colSpan="2" className="border-0 p-4 align-middle text-xs whitespace-no-wrap text-center flex items-center">
+						Loading...
+					</th>
+				</tr>
+			);
+		}
+
+		return data.map((item) => {
+			const lastValue = item[1].values[item[1].values.length - 1];
+			return (
+				<tr key={uuidv4()}>
+					<th className="border-0 p-4 align-middle text-xs whitespace-no-wrap text-left flex items-center">
+						{item[0]}
+					</th>
+					<td className="border-0 p-4 align-middle text-xs whitespace-no-wrap">
+						{lastValue}
+					</td>
+				</tr>
+			);
+		});
+	};
 
 	return (
 		<>
@@ -41,7 +54,7 @@ function CardTable({ title, data }) {
 							</tr>
 						</thead>
 						<tbody>
-							{ rowItem }
+							{ rowItem() }
 						</tbody>
 					</table>
 				</div>
@@ -52,12 +65,16 @@ function CardTable({ title, data }) {
 
 CardTable.defaultProps = {
 	title: "",
-	data: []
+	data: [],
+	pending: true,
+	error: null
 };
 
 CardTable.propTypes = {
 	title: PropTypes.string,
-	data: PropTypes.array.isRequired
+	data: PropTypes.array.isRequired,
+	pending: PropTypes.bool.isRequired,
+	error: PropTypes.any
 };
 
 export default CardTable;

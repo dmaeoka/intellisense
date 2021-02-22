@@ -18,8 +18,8 @@ To run a dev environment run the following command and access [http://localhost:
 
 ## 3. Run Prod environment
 
-To create a build and run the compiled version of the application run the following command and access [http://localhost:5000](http://localhost:5000).
+To create a build and run the compiled version of the application using **nodejs** and **express** run the following command and access [http://localhost:5000](http://localhost:5000).
 
-    npm run build
+    npm run start
 
 This command will create a build and start an express server using the port 5000.

@@ -20,11 +20,25 @@ class Tables extends React.Component {
 			<>
 				<div className="flex flex-wrap mt-4">
 					<div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-						<CardLineChartD3 title="TK1 Chart using D3.js" data={this.props.items} />
-						<CardLineChart title="TK1 Chart using Chart.js" data={this.props.items} />
+						<CardLineChartD3
+							title="TK1 Chart using D3.js"
+							data={this.props.items} pending={this.props.pending}
+							error={this.props.error}
+						/>
+						<CardLineChart
+							title="TK1 Chart using Chart.js"
+							data={this.props.items}
+							pending={this.props.pending}
+							error={this.props.error}
+						/>
 					</div>
 					<div className="w-full xl:w-4/12 px-4">
-						<CardTable title="Current TK1" data={ this.props.items } />
+						<CardTable
+							title="Current TK1"
+							data={this.props.items}
+							pending={this.props.pending}
+							error={this.props.error}
+						/>
 					</div>
 				</div>
 			</>
@@ -33,16 +47,22 @@ class Tables extends React.Component {
 }
 
 Tables.defaultProps = {
-	items: []
+	items: [],
+	pending: true,
+	error: null
 };
 
 Tables.propTypes = {
 	fetchReferencia: PropTypes.func.isRequired,
 	items: PropTypes.array.isRequired,
+	pending: PropTypes.bool.isRequired,
+	error: PropTypes.any
 };
 
 const mapStateToProps = (state) => ({
 	items: state.items.items,
+	pending: state.items.pending,
+	error: state.items.error,
 });
 
 export default connect(mapStateToProps, { fetchReferencia })(Tables);
