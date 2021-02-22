@@ -5,7 +5,6 @@ import * as d3 from "d3v4";
 function CardLineChartD3({ title, data, pending, error }) {
 
 	React.useEffect(() => {
-		console.log(data, pending, error);
 		if (pending || data.length === 0)
 			return;
 
@@ -104,7 +103,7 @@ function CardLineChartD3({ title, data, pending, error }) {
 	}, [data, pending, error]);
 
 	const loading = () => {
-		if (!pending) {
+		if (pending) {
 			return (<div className="text-gray-800 text-xl font-semibold whitespace-no-wrap text-center">Loading data...</div>);
 		}
 	};
